@@ -1,1 +1,8 @@
 Repo created - 3rd try
+
+FIRST TIME INST:
+$ npm i @prisma/client bcrypt cors dotenv express jsonwebtoken yup
+
+FIRS TIME DEV INST:
+npm install prisma -D
+
