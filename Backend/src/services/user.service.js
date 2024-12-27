@@ -1,6 +1,7 @@
 import prisma from "../models/prismaClient.js";
 import HttpError from "../utils/HttpError.js";
 import bcrypt from "bcrypt";
+import { isValidUserId } from "../utils/validation.utils.js";
 
 const create = async ({ username, email, password }) => {
   const existingEmail = await prisma.user.findUnique({
@@ -41,7 +42,7 @@ const getById = async (id) => {
 };
 
 const update = async (id, userData) => {
-  // itt lehet validálni a userId-t
+  await isValidUserId(id);
   const updatedUser = await prisma.user.update({
     where: { id },
     data: { ...userData },
@@ -50,7 +51,7 @@ const update = async (id, userData) => {
 };
 
 const destroy = async (id) => {
-  // Id validáció
+  await isValidUserId(id);
   const deletedUser = await prisma.user.delete({
     where: { id },
   });

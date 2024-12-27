@@ -1,6 +1,7 @@
 import userService from "../services/user.service.js";
 import { JWT_SECRET } from "../constants/constants.js";
 import HttpError from "../utils/HttpError.js";
+import { extractUserIdFromToken } from "../utils/validation.utils.js";
 
 const create = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -38,7 +39,12 @@ const getById = async (req, res, next) => {
 const update = async (req, res, next) => {
   const { id } = req.params;
   const { username, email, password, isAdmin } = req.body;
-  // Itt lehet validálni, hogy csak a saját profilját tudja módosítani
+
+  let userId = extractUserIdFromToken(req, JWT_SECRET);
+  if (id != userId) {
+    return next(new HttpError("Csak a saját profilodat módosíthatod", 401));
+  }
+
   try {
     const updatedUser = await userService.update(id, {
       username,
@@ -54,7 +60,12 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   const { id } = req.params;
-  //   Itt lehet validálni, hogy csak a saját profilját tudja törölni
+
+  let userId = extractUserIdFromToken(req, JWT_SECRET);
+  if (id != userId) {
+    return next(new HttpError("Csak a saját profilodat törölheted", 401));
+  }
+
   try {
     const deletedUser = await userService.destroy(id);
     res.status(200).json({ deletedUser });
