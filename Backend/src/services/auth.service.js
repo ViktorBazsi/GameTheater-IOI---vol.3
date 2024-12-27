@@ -6,6 +6,15 @@ import { JWT_SECRET } from "../constants/constants.js";
 import jwt from "jsonwebtoken";
 
 const register = async ({ username, email, password }) => {
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      OR: [{ username }, { email }],
+    },
+  });
+  if (existingUser) {
+    throw new HttpError("A felhasználónév vagy e-mail már foglalt!", 400);
+  }
+
   const newUser = userService.create({
     username,
     email,
@@ -21,10 +30,7 @@ const login = async ({ username, email, password }) => {
     },
   });
   if (!user)
-    throw new HttpError(
-      "Ilyen névvel vagy email címmel már regisztráltak!",
-      403
-    );
+    throw new HttpError("Nincs ilyen felhasználónév vagy e-mail cím!", 403);
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) throw new HttpError("Helytelen jelszó!", 403);

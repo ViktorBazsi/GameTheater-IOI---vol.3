@@ -6,6 +6,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 // ROUTES
 import userRoutes from "./routes/user.routes.js";
+import questionRoutes from "./routes/question.routes.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 // ROUTES
 app.use("/api/user", userRoutes);
+app.use("/api/question", questionRoutes);
 
 app.use(errorHandler);
 
