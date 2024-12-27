@@ -6,3 +6,21 @@ $ npm i @prisma/client bcrypt cors dotenv express jsonwebtoken yup
 FIRS TIME DEV INST:
 npm install prisma -D
 
+LOGIC:
+Feltölti az admin a kérdéseket és a válaszokat
+Megcsinálja az admin a gamepath-t
+
+Megcsinálja a user a fiókját
+  Elkészül vele együtt a userpath-ja
+    Belép vele az admin által kreált gamePath-be.
+
+      Az adott gamePath-ből érkező nextQuestion a userPath questionNr-je!!!
+        // így frissül szépen a játék
+
+          A questionNr és a userPath alapján létrehozza az új találkozást, 
+            ami alapján le tudja majd kérni a megfelelő kérdéseket,
+              megadja a megfelelő válaszokat, ami frissíti a resultokat,
+                
+                Ami megy a gamePath-ba, ahol kiszámolja melyik kapta a több választ,
+                  frissül minden (látják a színészek)
+                    ÉS KEZDŐDIK AZ EGÉSZ ELŐLRŐL

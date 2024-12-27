@@ -12,3 +12,81 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            String                @id @default(cuid())
+  username      String                @unique
+  email         String                @unique
+  password      String                
+  isAdmin       Boolean               @default(false)
+  createdAt     DateTime              @default(now())
+  userpaths     UserPath []// kapcsolat one to many -> egy user-nek több userpath-ja lehet
+}
+
+model Question {
+  id            String                @id @default(cuid())
+  number        Int                   @unique
+  question      String
+  answers       Answer [] //kapcsolat one to many -> egy kérdésnek több válasza lehet
+  // KAPCSOLÓTÁBLA
+  userpConnect  UserPath_On_Questions []//kapcsolat many to many -> több userpath-hoz több kérdés tartozhat
+}
+
+model Answer {
+  id            String                @id @default(cuid())
+  // Kapcsolat a kérdésekhez
+  relQuestionNr Int                   
+  question      Question              @relation(fields: [relQuestionNr], references: [number], onDelete: Cascade)            
+  // 
+  answer        String
+  resultReka    Int
+  resultDomi    Int
+  resultKata    Int
+  nextQuestNr   Int
+  uploaderId    String //a bejelentkezés token-jéből jön majd
+}
+
+model UserPath {
+  id            String                @id @default(cuid())
+  createdAt     DateTime              @default(now())
+  // Kapcsolat a userhez - megfelelő userhez (gamer-hez)
+  username      String                @unique
+  user          User                  @relation(fields: [username], references: [id], onDelete: Cascade)
+  // Kapcsolat a gamePathoz - megfelelő gamepath(game)-hez
+  gamepathId    String
+  gamepath      GamePath              @relation(fields: [gamepathId], references: [id], onDelete: Cascade)
+
+  questionNr    Int                   @default(0) //0-ás kérdés, a várakozás a kövi kérdésre, válasz nélkül
+  // KAPCSOLÓTÁBLA
+  questConnect  UserPath_On_Questions []// kapcsolat many to many -> több userPath-hoz több kérdés tartozhat
+  // RESULTS By User
+  resReka       Int                   @default(0)
+  resDomi       Int                   @default(0)
+  resKata       Int                   @default(0)
+  nextQuestion  Int                   @default(1)
+}
+
+// KAPCSOLÓ TÁBLA UserPath és Question között
+model UserPath_On_Questions{
+  id            String                @id @default(cuid())
+  userpathUName String
+  userpath      UserPath              @relation(fields: [userpathUName], references: [username], onDelete: Cascade)
+  questionNr    Int
+  question      Question              @relation(fields: [questionNr], references: [number], onDelete: Cascade)
+
+}
+
+model GamePath {
+  id            String                @id @default(cuid())
+  name          String                @unique
+  createdAt     DateTime              @default(now())
+  userpaths     UserPath []// kapcsolat one to many - egy gamePath több userPath-ot tartalmazhat
+  // Közös aktális kérdés - default várakozás a kövi kérdésre
+  questionNr    Int                   @default(0)
+  // Közös eredmények, a userPath-ból kiolvasva
+  resRekaAll    Int                   @default(0)
+  resDomiAll    Int                   @default(0)
+  resKataAll    Int                   @default(0)
+  // A közös eredmény alapján a kövi kérdés száma -> ez megy majd vissza a userPathok-ba
+  nextQuestion  Int                   @default(1)
+}
