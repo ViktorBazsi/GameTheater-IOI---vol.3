@@ -11,6 +11,29 @@ export const isValidUserId = async (id) => {
   return user;
 };
 
+export const isValidUsername = async (username) => {
+  const user = await prisma.user.findUnique({
+    where: { username },
+  });
+  if (!user) throw new HttpError("username nem található!", 404);
+  return user;
+};
+
+export const isValidGamePathId = async (id) => {
+  const validGamePathId = await prisma.gamePath.findUnique({
+    where: { id },
+  });
+  if (!validGamePathId) throw new HttpError("gamePathId nem található!", 404);
+  return validGamePathId;
+};
+
+export const isValidGamePathName = async (name) => {
+  const validGamePathName = await prisma.gamePath.findUnique({
+    where: { name },
+  });
+  if (validGamePathName) throw new HttpError("gamePath name már létezik", 404);
+};
+
 // QUESTION
 export const isValidQuestionId = async (id) => {
   const question = await prisma.question.findUnique({

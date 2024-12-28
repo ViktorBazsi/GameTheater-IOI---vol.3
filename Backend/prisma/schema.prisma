@@ -20,7 +20,7 @@ model User {
   password      String                
   isAdmin       Boolean               @default(false)
   createdAt     DateTime              @default(now())
-  userpaths     UserPath []// kapcsolat one to many -> egy user-nek több userpath-ja lehet
+  userPaths     UserPath []// kapcsolat one to many -> egy user-nek több userpath-ja lehet
 }
 
 model Question {
@@ -51,10 +51,10 @@ model UserPath {
   createdAt     DateTime              @default(now())
   // Kapcsolat a userhez - megfelelő userhez (gamer-hez)
   username      String                @unique
-  user          User                  @relation(fields: [username], references: [id], onDelete: Cascade)
+  user          User                  @relation(fields: [username], references: [username], onDelete: Cascade)
   // Kapcsolat a gamePathoz - megfelelő gamepath(game)-hez
-  gamepathId    String
-  gamepath      GamePath              @relation(fields: [gamepathId], references: [id], onDelete: Cascade)
+  gamePathId    String
+  gamePath      GamePath              @relation(fields: [gamePathId], references: [id], onDelete: Cascade)
 
   questionNr    Int                   @default(0) //0-ás kérdés, a várakozás a kövi kérdésre, válasz nélkül
   // KAPCSOLÓTÁBLA
@@ -69,8 +69,8 @@ model UserPath {
 // KAPCSOLÓ TÁBLA UserPath és Question között
 model UserPath_On_Questions{
   id            String                @id @default(cuid())
-  userpathUName String
-  userpath      UserPath              @relation(fields: [userpathUName], references: [username], onDelete: Cascade)
+  userPathUName String
+  userPath      UserPath              @relation(fields: [userPathUName], references: [username], onDelete: Cascade)
   questionNr    Int
   question      Question              @relation(fields: [questionNr], references: [number], onDelete: Cascade)
 
