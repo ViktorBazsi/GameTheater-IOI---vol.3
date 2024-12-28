@@ -2,7 +2,9 @@ import prisma from "../models/prismaClient.js";
 import HttpError from "../utils/HttpError.js";
 import {
   isValidGamePathId,
+  isValidGamePathName,
   isValidUsername,
+  isValidUserPathId,
 } from "../utils/validation.utils.js";
 
 const create = async ({ username, gamePathId }) => {
@@ -33,7 +35,35 @@ const list = async () => {
   return allUserPaths;
 };
 
+const getById = async (id) => {
+  await isValidUserPathId(id);
+  const getUserPathById = await prisma.userPath.findUnique({
+    where: { id },
+  });
+  return getUserPathById;
+};
+
+const update = async (id, userPathData) => {
+  await isValidUserPathId(id);
+  const updatedUserPath = await prisma.userPath.update({
+    where: { id },
+    data: { ...userPathData },
+  });
+  return updatedUserPath;
+};
+
+const destroy = async (id) => {
+  await isValidUserPathId(id);
+  const deletedUserPath = await prisma.userPath.delete({
+    where: { id },
+  });
+  return deletedUserPath;
+};
+
 export default {
   create,
   list,
+  getById,
+  update,
+  destroy,
 };

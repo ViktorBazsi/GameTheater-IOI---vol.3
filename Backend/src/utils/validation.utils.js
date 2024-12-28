@@ -19,6 +19,16 @@ export const isValidUsername = async (username) => {
   return user;
 };
 
+// USERPATH
+export const isValidUserPathId = async (id) => {
+  const userPath = await prisma.userPath.findUnique({
+    where: { id },
+  });
+  if (!userPath) throw new HttpError("userPath id nem található!", 404);
+  return userPath;
+};
+
+// GAME
 export const isValidGamePathId = async (id) => {
   const validGamePathId = await prisma.gamePath.findUnique({
     where: { id },

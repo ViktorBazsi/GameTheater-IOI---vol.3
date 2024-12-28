@@ -24,7 +24,51 @@ const list = async (req, res, next) => {
   }
 };
 
+const getById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const getUserPathById = await userPathService.getById(id);
+    res.status(200).json(getUserPathById);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const update = async (req, res, next) => {
+  const { id } = req.params;
+  const { gamePathId, questionNr, resReka, resDomi, resKata, nextQuestion } =
+    req.body;
+
+  try {
+    const updatedUserPath = await userPathService.update(id, {
+      gamePathId,
+      questionNr,
+      resReka,
+      resDomi,
+      resKata,
+      nextQuestion,
+    });
+    res.status(201).json(updatedUserPath);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const destroy = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const deletedUserPath = await userPathService.destroy(id);
+    res.status(200).json({ deletedUserPath });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   create,
   list,
+  getById,
+  update,
+  destroy,
 };

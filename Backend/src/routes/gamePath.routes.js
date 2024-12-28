@@ -18,5 +18,10 @@ router.get(
   authMiddleware.authorize,
   gamePathController.list
 );
+router.get("/:id", authMiddleware.authenticate, gamePathController.getById);
+// PUT
+router.put("/:id", authMiddleware.authenticate, gamePathController.update);
+// DELETE
+router.delete("/:id", authMiddleware.authenticate, gamePathController.destroy);
 
 export default router;
