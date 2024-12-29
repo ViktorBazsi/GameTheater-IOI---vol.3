@@ -49,8 +49,15 @@ const getByName = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   const { id } = req.params;
-  const { gamePathId, questionNr, resReka, resDomi, resKata, nextQuestion } =
-    req.body;
+  const {
+    gamePathId,
+    questionNr,
+    resReka,
+    resDomi,
+    resKata,
+    nextQuestion,
+    userAnswerId,
+  } = req.body;
 
   try {
     const updatedUserPath = await userPathService.update(id, {
@@ -60,6 +67,7 @@ const update = async (req, res, next) => {
       resDomi,
       resKata,
       nextQuestion,
+      userAnswerId,
     });
     res.status(201).json(updatedUserPath);
   } catch (error) {
