@@ -26,6 +26,9 @@ const getById = async (id) => {
   await isValidGamePathId(id);
   const getGamePathById = await prisma.gamePath.findUnique({
     where: { id },
+    include: {
+      userpaths: true,
+    },
   });
   return getGamePathById;
 };

@@ -15,7 +15,6 @@ router.post(
 router.get(
   "/",
   authMiddleware.authenticate,
-  authMiddleware.authorize,
   gamePathController.list
 );
 router.get("/:id", authMiddleware.authenticate, gamePathController.getById);
@@ -23,5 +22,10 @@ router.get("/:id", authMiddleware.authenticate, gamePathController.getById);
 router.put("/:id", authMiddleware.authenticate, gamePathController.update);
 // DELETE
 router.delete("/:id", authMiddleware.authenticate, gamePathController.destroy);
-
+// EXTRA
+router.put(
+  "/extra/:id",
+  authMiddleware.authenticate,
+  gamePathController.updateGamePathByAllAnswerByMajority
+);
 export default router;
