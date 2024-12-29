@@ -1,3 +1,21 @@
-export default function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+
+// PAGES
+import MainPageLanding from "./pages/MainPageLanding";
+
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <div>
+          <Routes>
+            <Route path="/" element={<MainPageLanding />} />
+          </Routes>
+        </div>
+      </AuthProvider>
+    </Router>
+  );
 }
+
+export default App;
