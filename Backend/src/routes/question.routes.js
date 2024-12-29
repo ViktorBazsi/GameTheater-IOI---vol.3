@@ -33,5 +33,11 @@ router.delete(
   authMiddleware.authorize,
   questionController.destroy
 );
+// EXTRA
+// router.put(
+//   "/extra/chosenAnswer",
+//   authMiddleware.authenticate,
+//   questionController.getAnswer
+// );
 
 export default router;

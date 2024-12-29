@@ -1,4 +1,7 @@
+import answerService from "../services/answer.service.js";
+import questionService from "../services/question.service.js";
 import userPathService from "../services/userPath.service.js";
+import answerController from "./answer.controller.js";
 
 const create = async (req, res, next) => {
   const username = req.user?.username;
@@ -29,6 +32,16 @@ const getById = async (req, res, next) => {
   try {
     const getUserPathById = await userPathService.getById(id);
     res.status(200).json(getUserPathById);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getByName = async (req, res, next) => {
+  const { username } = req.params;
+  try {
+    const userPathByUsername = await userPathService.getByName(username);
+    res.status(200).json(userPathByUsername);
   } catch (error) {
     next(error);
   }
@@ -65,10 +78,47 @@ const destroy = async (req, res, next) => {
   }
 };
 
+const nextQuestion = async (req, res, next) => {
+  const username = req.user?.username;
+  const userPath = await userPathService.getByName(username);
+  const nextQuestionNr = userPath.nextQuestion;
+  const nextQuestion = await questionService.getByNumber(nextQuestionNr);
+  res.status(200).json(nextQuestion);
+};
+
+const addAnswer = async (req, res, next) => {
+  const { answer } = req.body;
+  // kiszedjük a megfelelő userPath-ot a username alapján
+  const username = req.user?.username;
+  const userPath = await userPathService.getByName(username);
+  // kieszedjük a userPath-hoz tartozó következő kérdést, a kérdésszám alapján
+  const nextQuestionNr = userPath.nextQuestion;
+  const nextQuestion = await questionService.getByNumber(nextQuestionNr);
+  // Kiválasztja a user a megfelelő választ.
+  const userAnswer = await answerService.getByAnswer(answer);
+  // kiszedjük a választott kérdést
+  const chosenAnswerId = userAnswer.id;
+  const getChosenAnswer = await answerService.getById(chosenAnswerId);
+  // Frissítjük a userPath-ot a megfelelő válasszal
+  const updatedUserPath = await userPathService.update(userPath.id, {
+    questionNr: getChosenAnswer.relQuestionNr,
+    resReka: getChosenAnswer.resultReka,
+    resDomi: getChosenAnswer.resultDomi,
+    resKata: getChosenAnswer.resultKata,
+    nextQuestion: getChosenAnswer.nextQuestNr,
+    userAnswerId: getChosenAnswer.id,
+  });
+  res.status(200).json(updatedUserPath);
+};
+
 export default {
   create,
   list,
   getById,
   update,
   destroy,
+  getByName,
+  // ------ EXTRA
+  nextQuestion,
+  addAnswer,
 };

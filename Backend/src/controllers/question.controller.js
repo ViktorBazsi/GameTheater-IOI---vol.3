@@ -1,3 +1,4 @@
+import answerService from "../services/answer.service.js";
 import questionService from "../services/question.service.js";
 import HttpError from "../utils/HttpError.js";
 
@@ -68,6 +69,20 @@ const update = async (req, res, next) => {
   }
 };
 
+// const getAnswer = async (req, res, next) => {
+//   const { answer, id } = req.body;
+//   const chosenAnswer = await answerService.getByAnswer(answer);
+//   try {
+//     const answeredQuestion = await questionService.update(id, {
+//       chosenAnsId: chosenAnswer.id,
+//       chosenAns: chosenAnswer.answer,
+//     });
+//     res.status(200).json(answeredQuestion);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 const destroy = async (req, res, next) => {
   const { id } = req.params;
 
@@ -86,4 +101,6 @@ export default {
   getByNumber,
   update,
   destroy,
+  // ------ EXTRA
+  // getAnswer,
 };

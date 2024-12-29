@@ -64,6 +64,7 @@ model UserPath {
   resDomi       Int                   @default(0)
   resKata       Int                   @default(0)
   nextQuestion  Int                   @default(1)
+  userAnswerId  String?               @unique
 }
 
 // KAPCSOLÓ TÁBLA UserPath és Question között

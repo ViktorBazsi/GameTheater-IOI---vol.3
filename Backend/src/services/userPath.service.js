@@ -42,6 +42,14 @@ const getById = async (id) => {
   return getUserPathById;
 };
 
+const getByName = async (username) => {
+  // await isValidUsername(username);
+  const userPathByUsername = await prisma.userPath.findUnique({
+    where: { username },
+  });
+  return userPathByUsername;
+};
+
 const update = async (id, userPathData) => {
   await isValidUserPathId(id);
   const updatedUserPath = await prisma.userPath.update({
@@ -65,4 +73,6 @@ export default {
   getById,
   update,
   destroy,
+  // ------EXTRA
+  getByName,
 };

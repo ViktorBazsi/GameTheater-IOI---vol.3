@@ -39,6 +39,13 @@ const getById = async (id) => {
   return answerById;
 };
 
+const getByAnswer = async (answer) => {
+  const answerByAnswer = await prisma.answer.findFirst({
+    where: { answer },
+  });
+  return answerByAnswer;
+};
+
 const update = async (id, answerData) => {
   await isValidAnswerId(id);
   const updatedAnswer = await prisma.answer.update({
@@ -62,4 +69,6 @@ export default {
   getById,
   update,
   destroy,
+  // ------ EXTRA
+  getByAnswer,
 };

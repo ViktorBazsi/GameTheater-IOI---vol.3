@@ -24,3 +24,16 @@ Megcsinálja a user a fiókját
                 Ami megy a gamePath-ba, ahol kiszámolja melyik kapta a több választ,
                   frissül minden (látják a színészek)
                     ÉS KEZDŐDIK AZ EGÉSZ ELŐLRŐL
+
+LOGIC:
+  WORKING LOGIC:
+    userPath - látjuk a user aktuális állását, az érkező kérdést, a következőt és a resultokat
+    nextQuestion - TEST - kidobja a userPath alapján a következő kérdést és a hozzá tartozó válaszokat
+    addAnswer - TEST - a user (body-ban) megadja a válaszát. (Pontosan annak kell lennie, később majd lehet Id, csak így könnyebb nyomonkövetni)
+      A megadott válasz alapján update-eli a userPath aktuális állását.
+          SCHEMA UPDATE - userPath - új oszlop: userAnswerId 
+            Ennek alapján tud majd a gamePath számolni. MAJD
+               ITT A VÉGE A LOOPNAK.
+                    
+            NEXT STEP: ezt berakni a gamePath-be, ott kiszámolni melyik válaszból jött több userAnswerId alapján,
+              majd ezt betenni a gamePath resultjaiba, amit automatikusan bedobunk a userPath-ba, hogy a többség által választott game-en menjenek tovább
