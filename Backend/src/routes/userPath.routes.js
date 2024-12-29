@@ -34,7 +34,7 @@ router.put(
   userPathController.addAnswer
 );
 router.put(
-  "/refresh/:id", //id: gamePathId
+  "/refresh/:id", //id: gamePathId userPathId from loginData
   authMiddleware.authenticate,
   userPathController.refreshUserPath
 );
