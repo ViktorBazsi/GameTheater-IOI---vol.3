@@ -28,6 +28,16 @@ export const isValidUserPathId = async (id) => {
   return userPath;
 };
 
+// USERPATH_ON_QUESTION
+export const isValidUserPath_On_Question_Id = async (id) => {
+  const userPath_On_Question = await prisma.userPath_On_Questions.findUnique({
+    where: { id },
+  });
+  if (!userPath_On_Question)
+    throw new HttpError("A keresett kapcsolat nem található.", 404);
+  return userPath_On_Question;
+};
+
 // GAME
 export const isValidGamePathId = async (id) => {
   const validGamePathId = await prisma.gamePath.findUnique({

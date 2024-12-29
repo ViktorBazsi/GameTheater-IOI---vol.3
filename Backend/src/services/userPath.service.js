@@ -2,7 +2,6 @@ import prisma from "../models/prismaClient.js";
 import HttpError from "../utils/HttpError.js";
 import {
   isValidGamePathId,
-  isValidGamePathName,
   isValidUsername,
   isValidUserPathId,
 } from "../utils/validation.utils.js";
