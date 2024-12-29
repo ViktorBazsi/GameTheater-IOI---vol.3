@@ -33,5 +33,10 @@ router.put(
   authMiddleware.authenticate,
   userPathController.addAnswer
 );
+router.put(
+  "/refresh/:id", //id: gamePathId
+  authMiddleware.authenticate,
+  userPathController.refreshUserPath
+);
 
 export default router;

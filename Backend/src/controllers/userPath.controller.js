@@ -1,7 +1,9 @@
 import answerService from "../services/answer.service.js";
+import gamePathService from "../services/gamePath.service.js";
 import questionService from "../services/question.service.js";
 import userPathService from "../services/userPath.service.js";
 import answerController from "./answer.controller.js";
+import gamePathController from "./gamePath.controller.js";
 
 const create = async (req, res, next) => {
   const username = req.user?.username;
@@ -119,6 +121,37 @@ const addAnswer = async (req, res, next) => {
   res.status(200).json(updatedUserPath);
 };
 
+const refreshUserPath = async (req, res, next) => {
+  // kivesszük a megfelelő gamePathId-u gamePath-ot
+  const { id } = req.params;
+  const mainGamePath = await gamePathService.getById(id);
+  // Kivesszük a megfelelő userPath-ot
+  const username = req.user?.username;
+  const userPath = await userPathService.getByName(username);
+  // // Csinálunk belőle egy új objectet:
+  // const updatedMajorityDataObject = {
+  //   questionNr: mainGamePath.questionNr,
+  //   resReka: mainGamePath.resRekaAll,
+  //   resDomi: mainGamePath.resDomiAll,
+  //   resKata: mainGamePath.resKataAll,
+  //   nextQuestion: mainGamePath.nextQuestion,
+  // };
+  // Amit szépen visszafrissítünk a userPathokba:
+  try {
+    const refreshedUserPath = await userPathService.update(userPath.id, {
+      questionNr: mainGamePath.questionNr,
+      resReka: mainGamePath.resRekaAll,
+      resDomi: mainGamePath.resDomiAll,
+      resKata: mainGamePath.resKataAll,
+      nextQuestion: mainGamePath.nextQuestion,
+    });
+    res.status(200).json(refreshedUserPath);
+  } catch (error) {
+    next(error);
+  }
+  // res.status(200).json(updatedMajorityDataObject);
+};
+
 export default {
   create,
   list,
@@ -129,4 +162,5 @@ export default {
   // ------ EXTRA
   nextQuestion,
   addAnswer,
+  refreshUserPath,
 };
