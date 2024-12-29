@@ -37,3 +37,6 @@ LOGIC:
                     
             NEXT STEP: ezt berakni a gamePath-be, ott kiszámolni melyik válaszból jött több userAnswerId alapján,
               majd ezt betenni a gamePath resultjaiba, amit automatikusan bedobunk a userPath-ba, hogy a többség által választott game-en menjenek tovább
+
+  NEXT STEP:
+    READY to start building up the FRONT END for this backend! :D
