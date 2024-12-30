@@ -1,30 +1,39 @@
-import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useNavigate } from "react-router-dom";
-import { userValidationSchemaForLogin } from "../schema/userValidationSchema";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import { userValidationSchemaForRegister } from "../schema/userValidationSchema";
 
-export default function LoginForm({ onRegisterClick }) {
-  const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const initialValues = { email: "", password: "" };
+export default function RegisterForm({ onLoginClick }) {
+  const initialValues = { username: "", email: "", password: "" };
 
-  const handleLogin = async (values) => {
-    console.log("Login értékek: ", values);
-    alert("Sikeres bejelntkezés!");
+  const handleRegister = async (values) => {
+    // Regisztráció logika
+    console.log("Regisztráció értékek: ", values);
+    alert("Sikeres regisztráció!");
   };
 
   return (
-    <div className="w-full mx-aut my-40 bg-white p-5 rounded-md bg-opacity-35">
+    <div className="w-full mx-auto my-40 bg-white p-5 rounded-md bg-opacity-35">
       <h2 className="font-bold text-xk text-white text-xl mb-6">
-        Bejelentkezés
+        Regisztráció
       </h2>
       <Formik
         initialValues={initialValues}
-        validationSchema={userValidationSchemaForLogin}
-        onSubmit={handleLogin}
+        validationSchema={userValidationSchemaForRegister}
+        onSubmit={handleRegister}
       >
         <Form>
+          <div className="mb-4">
+            <Field
+              type="text"
+              name="username"
+              placeholder="Név"
+              className="w-full border p-2 rounded my-1 text-gray-800"
+            />
+            <ErrorMessage
+              name="username"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
           <div className="mb-4">
             <Field
               type="email"
@@ -42,7 +51,7 @@ export default function LoginForm({ onRegisterClick }) {
             <Field
               type="password"
               name="password"
-              placeholder="jelszó"
+              placeholder="Jelszó"
               className="w-full border p-2 rounded my-1 text-gray-800"
             />
             <ErrorMessage
@@ -56,18 +65,18 @@ export default function LoginForm({ onRegisterClick }) {
               type="submit"
               className="border-2 bg-purple-950 bg-opacity-25 my-5 py-5 px-4 w-3/4 rounded-md text-white text-lg font-bold transform transition duration-700 hover:scale-110 hover:bg-purple-950 hover:bg-opacity-55"
             >
-              Bejelentkezés
+              Regisztráció
             </button>
           </div>
         </Form>
       </Formik>
       <div className="flex justify-center text-white">
-        Nem vagy regisztrálva?
+        Már van fiókod?
         <button
-          onClick={onRegisterClick}
+          onClick={onLoginClick}
           className="text-white hover:underline pl-2 hover:scale-110 hover:text-purple-900 transition duration-700"
         >
-          Regisztrálj
+          Bejelentkezés
         </button>
       </div>
     </div>

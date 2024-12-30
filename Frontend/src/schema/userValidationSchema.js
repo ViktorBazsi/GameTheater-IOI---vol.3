@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const userValidationSchemaForRegister = yup.object({
-  name: yup
+  username: yup
     .string()
     .required("Név megadása kötelező")
     .min(2, "Legalább két betűs név kell"),
@@ -16,7 +16,7 @@ export const userValidationSchemaForRegister = yup.object({
 });
 
 export const userValidationSchemaForLogin = yup.object({
-  name: yup.string().min(2, "Legalább két betűs név kell"),
+  username: yup.string().min(2, "Legalább két betűs név kell"),
   email: yup
     .string()
     .email("Valós emailt adj meg!")
