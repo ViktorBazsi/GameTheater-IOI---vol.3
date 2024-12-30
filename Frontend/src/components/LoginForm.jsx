@@ -75,7 +75,7 @@ export default function LoginForm() {
         Nem vagy regisztrálva?
         <Link
           to=""
-          className="text-white hover:underline pl-2 hover:scale-110 transition duration-700"
+          className="text-white hover:underline pl-2 hover:scale-110 hover:text-purple-900 transition duration-700"
         >
           Regisztrálj
         </Link>
