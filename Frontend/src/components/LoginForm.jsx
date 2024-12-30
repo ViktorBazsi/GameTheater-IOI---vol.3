@@ -10,8 +10,20 @@ export default function LoginForm({ onRegisterClick }) {
   const initialValues = { email: "", password: "" };
 
   const handleLogin = async (values) => {
-    console.log("Login értékek: ", values);
-    alert("Sikeres bejelntkezés!");
+    // Login logika
+    // console.log("Login értékek: ", values);
+    // alert("Sikeres bejelntkezés!");
+    const result = await login(values);
+
+    if (result.ok) {
+      alert("Sikeres bejelentkezés");
+      navigate("/signedIn"); //EZT AZ OLDALT MAJD MEG KELL CSINÁLNI MÉG
+    } else {
+      const errorMessage =
+        result.message?.response?.data?.error || "Ismeretlen hiba";
+      const statusCode = result.message?.response?.status || "N/A";
+      alert(`Sikertelen bejelentkezés! ${statusCode} - ${errorMessage}`);
+    }
   };
 
   return (
