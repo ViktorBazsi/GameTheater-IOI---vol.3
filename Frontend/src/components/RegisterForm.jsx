@@ -1,26 +1,28 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { userValidationSchemaForRegister } from "../schema/userValidationSchema";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 export default function RegisterForm({ onLoginClick }) {
   const { register } = useContext(AuthContext);
-  const navigate = useNavigate();
   const initialValues = { username: "", email: "", password: "" };
 
   const handleRegister = async (values) => {
-    // Regisztráció logika
-    // console.log("Regisztráció értékek: ", values);
-    // alert("Sikeres regisztráció!");
-    const result = await register(values);
-    if (result.ok) {
-      alert("Sikeres regisztráció! Jelentkezz be!");
-      navigate("/login"); // IDE MAJD KELL A LINK A MÁSIK MODALHOZ
-    } else {
-      console.log(result.message?.response?.data?.error);
-      const errorMessage =
-        result.message?.response?.data?.error || "Ismeretlen hiba";
-      const statusCode = result.message?.response?.status || "N/A";
-      alert(`Sikertelen bejelentkezés! ${statusCode} - ${errorMessage}`);
-    }
+    // REGGISTER logika
+    console.log("Register értékek: ", values);
+    alert("Sikeres regisztráció!");
+    onLoginClick();
+    // const result = await register(values);
+
+    // if (result.ok) {
+    //   alert("Sikeres regisztráció! Jelentkezz be!");
+    //   onLoginClick(); // Modal váltása a bejelentkezős formra
+    // } else {
+    //   const errorMessage =
+    //     result.message?.response?.data?.error || "Ismeretlen hiba";
+    //   const statusCode = result.message?.response?.status || "N/A";
+    //   alert(`Sikertelen regisztráció! ${statusCode} - ${errorMessage}`);
+    // }
   };
 
   return (
