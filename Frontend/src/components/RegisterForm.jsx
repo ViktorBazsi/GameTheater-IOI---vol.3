@@ -9,20 +9,20 @@ export default function RegisterForm({ onLoginClick }) {
 
   const handleRegister = async (values) => {
     // REGGISTER logika
-    console.log("Register értékek: ", values);
-    alert("Sikeres regisztráció!");
-    onLoginClick();
-    // const result = await register(values);
+    // console.log("Register értékek: ", values);
+    // alert("Sikeres regisztráció!");
+    // onLoginClick();
+    const result = await register(values);
 
-    // if (result.ok) {
-    //   alert("Sikeres regisztráció! Jelentkezz be!");
-    //   onLoginClick(); // Modal váltása a bejelentkezős formra
-    // } else {
-    //   const errorMessage =
-    //     result.message?.response?.data?.error || "Ismeretlen hiba";
-    //   const statusCode = result.message?.response?.status || "N/A";
-    //   alert(`Sikertelen regisztráció! ${statusCode} - ${errorMessage}`);
-    // }
+    if (result.ok) {
+      alert("Sikeres regisztráció! Jelentkezz be!");
+      onLoginClick(); // Modal váltása a bejelentkezős formra
+    } else {
+      const errorMessage =
+        result.message?.response?.data?.error || "Ismeretlen hiba";
+      const statusCode = result.message?.response?.status || "N/A";
+      alert(`Sikertelen regisztráció! ${statusCode} - ${errorMessage}`);
+    }
   };
 
   return (

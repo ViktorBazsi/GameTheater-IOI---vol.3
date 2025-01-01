@@ -11,6 +11,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<MainPageLanding />} />
+            <Route path="/signedIn" element={<MainPageLanding />} />
           </Routes>
         </div>
       </AuthProvider>
