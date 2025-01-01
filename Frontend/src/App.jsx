@@ -3,15 +3,18 @@ import { AuthProvider } from "./context/AuthContext";
 
 // PAGES
 import MainPageLanding from "./pages/MainPageLanding";
+import MainPageLoggedIn from "./pages/MainPageLoggedIn";
+import Header from "./components/Header";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <div>
+          <Header />
           <Routes>
             <Route path="/" element={<MainPageLanding />} />
-            <Route path="/signedIn" element={<MainPageLanding />} />
+            <Route path="/signedIn" element={<MainPageLoggedIn />} />
           </Routes>
         </div>
       </AuthProvider>
