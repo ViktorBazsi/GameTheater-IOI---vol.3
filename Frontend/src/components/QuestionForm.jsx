@@ -1,11 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import questionService from "../services/question.service";
-import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
 import { userValidationSchemaForQuestion } from "../schema/userValidationSchema";
 
+// eslint-disable-next-line react/prop-types
 export default function QuestionForm({ setQuestion }) {
-  const { user } = useContext(AuthContext);
 
   const initialValues = { number: "", question: "" };
 
