@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        "logo-pattern": "url('/LogoPicture.png')",
+        "logo-pattern": "url('/Public/LogoPicture.png')",
       },
     },
   },
