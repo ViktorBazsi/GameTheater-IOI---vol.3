@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext";
 import MainPageLanding from "./pages/MainPageLanding";
 import MainPageLoggedIn from "./pages/MainPageLoggedIn";
 import Header from "./components/Header";
+import AdminQuestionPage from "./pages/AdminQuestionsPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPageLanding />} />
             <Route path="/signedIn" element={<MainPageLoggedIn />} />
+            <Route path="/question" element={<AdminQuestionPage />} />
           </Routes>
         </div>
       </AuthProvider>

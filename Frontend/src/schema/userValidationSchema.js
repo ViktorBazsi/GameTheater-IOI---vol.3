@@ -26,3 +26,12 @@ export const userValidationSchemaForLogin = yup.object({
     .min(6, "A jelszónak minimum 6 karakternek kell lennie")
     .required("Jelszó megadása kötelező!"),
 });
+
+export const userValidationSchemaForQuestion = yup.object({
+  number: yup
+    .number()
+    .required("A kérdés száma kötelező")
+    .positive("A számnak pozitívnak kell lennie")
+    .integer("A számnak egész számnak kell lennie"),
+  question: yup.string().required("A kérdés szövege kötelező"),
+});

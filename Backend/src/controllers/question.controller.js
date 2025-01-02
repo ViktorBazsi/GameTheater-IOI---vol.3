@@ -14,7 +14,7 @@ const create = async (req, res, next) => {
 
   try {
     const newQuestion = await questionService.create({
-      number,
+      number: Number(number),
       question,
     });
     res.status(201).json(newQuestion);
