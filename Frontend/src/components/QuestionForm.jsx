@@ -4,7 +4,6 @@ import { userValidationSchemaForQuestion } from "../schema/userValidationSchema"
 
 // eslint-disable-next-line react/prop-types
 export default function QuestionForm({ setQuestion }) {
-
   const initialValues = { number: "", question: "" };
 
   const handleCreate = async (values, { setSubmitting, resetForm }) => {
@@ -18,12 +17,16 @@ export default function QuestionForm({ setQuestion }) {
     try {
       const newQuestion = await questionService.addQuestion(formData);
 
+      // Új kérdés hozzáadása és lista rendezése
       setQuestion((prev) => {
-        return (
-          [...(Array.isArray(prev) ? prev : []), newQuestion],
-          alert("Sikeres feltöltés")
-        );
+        const updatedQuestions = [
+          ...(Array.isArray(prev) ? prev : []),
+          newQuestion,
+        ];
+        return updatedQuestions.sort((a, b) => a.number - b.number); // Sorrend rendezése number alapján
       });
+
+      alert("Sikeres feltöltés");
       resetForm();
     } catch (error) {
       console.log("Hiba történt:", error);
