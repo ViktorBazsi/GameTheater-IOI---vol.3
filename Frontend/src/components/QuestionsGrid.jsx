@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 // components/QuestionsGrid.jsx
 
-
 const QuestionsGrid = ({ questions }) => {
   return (
     <div className="relative z-10 w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 mt-8">
@@ -9,9 +8,12 @@ const QuestionsGrid = ({ questions }) => {
         questions.map((question) => (
           <div
             key={question.id}
-            className="bg-white shadow-lg rounded-lg p-6 border border-gray-200 flex flex-col"
+            className="bg-purple-950 bg-opacity-70 rounded-lg p-6 flex flex-col"
           >
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-lg font-semibold text-yellow-500 mb-4 text-end">
+              {question.number}
+            </h3>
+            <h3 className="text-xl font-semibold text-yellow-500 mb-4">
               {question.question}
             </h3>
             {question.answers && question.answers.length > 0 ? (
@@ -19,19 +21,19 @@ const QuestionsGrid = ({ questions }) => {
                 {question.answers.map((answer) => (
                   <li
                     key={answer.id}
-                    className="bg-gray-100 p-3 rounded-lg border border-gray-300"
+                    className="bg-purple-200 bg-opacity-30 p-3 text-yellow-500 rounded-lg border border-gray-300"
                   >
                     {answer.answer}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-gray-500">No answers available</p>
+              <p className="text-yellow-500">No answers available</p>
             )}
           </div>
         ))
       ) : (
-        <p className="text-gray-500">Loading questions...</p>
+        <p className="text-yellow-500">Loading questions...</p>
       )}
     </div>
   );
