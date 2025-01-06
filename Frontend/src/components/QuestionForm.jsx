@@ -42,7 +42,7 @@ export default function QuestionForm({ setQuestion }) {
   };
 
   return (
-    <div className="w-1/2 mx-aut my-52 bg-purple-950 p-5 rounded-md bg-opacity-70">
+    <div className="w-1/2 mx-aut mt-32 mb-12 bg-purple-950 p-5 rounded-md bg-opacity-70">
       <h2 className="font-bold text-xk text-white text-xl mb-6">Új kérdés:</h2>
       <Formik
         initialValues={initialValues}

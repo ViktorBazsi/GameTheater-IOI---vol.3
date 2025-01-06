@@ -4,6 +4,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { userValidationSchemaForLogin } from "../schema/userValidationSchema";
 
+// eslint-disable-next-line react/prop-types
 export default function LoginForm({ onRegisterClick }) {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
