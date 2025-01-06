@@ -25,6 +25,9 @@ const list = async () => {
     include: {
       answers: true,
     },
+    orderBy: {
+      number: "asc",
+    },
   });
   return allQuestions;
 };
