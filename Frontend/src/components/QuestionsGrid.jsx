@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import Modal from "../components/QuestionModal"; // Importáld a modal komponenst
+import questionService from "../services/question.service"; // A kérdéseket kezelő service
 
-const QuestionsGrid = ({ questions }) => {
+const QuestionsGrid = ({ questions, setQuestions }) => {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
 
   const handleCardClick = (question) => {
@@ -11,6 +12,16 @@ const QuestionsGrid = ({ questions }) => {
 
   const handleCloseModal = () => {
     setSelectedQuestion(null);
+  };
+
+  // Kérdések újratöltése a backendről
+  const refreshQuestions = async () => {
+    try {
+      const updatedQuestions = await questionService.listQuestions(); // Feltételezve, hogy van egy kérdéseket lekérő metódus
+      setQuestions(updatedQuestions); // A kérdések frissítése
+    } catch (error) {
+      console.error("Failed to refresh questions:", error);
+    }
   };
 
   return (
@@ -51,7 +62,11 @@ const QuestionsGrid = ({ questions }) => {
       </div>
 
       {selectedQuestion && (
-        <Modal question={selectedQuestion} onClose={handleCloseModal} />
+        <Modal
+          question={selectedQuestion}
+          onClose={handleCloseModal}
+          onSave={refreshQuestions} // Átadjuk a frissítő függvényt a Modalnak
+        />
       )}
     </>
   );

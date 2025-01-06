@@ -1,14 +1,57 @@
 
 /* eslint-disable react/prop-types */
-// import { useState } from "react";
 import { Formik, Field, Form, FieldArray } from "formik";
+import { useState } from "react";
+import questionService from "../services/question.service"; // Az új kérdéshez kapcsolódó service
+import answerService from "../services/answer.service"; // Az új válaszokhoz kapcsolódó service
 
-const Modal = ({ question, onClose }) => {
-  const handleSave = (values) => {
-    // Itt lehetne menteni a frissített kérdést és válaszokat
-    console.log("Updated question:", values.updatedQuestion);
-    console.log("Updated answers:", values.updatedAnswers);
-    onClose(); // Modal bezárása
+const Modal = ({ question, onClose, onSave }) => {
+  // onSave prop átadása
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = async (values) => {
+    try {
+      setLoading(true);
+
+      // Kérdés frissítése
+      await questionService.updateQuestion(question.id, {
+        question: values.updatedQuestion,
+      });
+
+      // Válaszok mentése (create vagy update)
+      const answerRequests = values.updatedAnswers.map((answer) => {
+        const answerData = {
+          answer: answer.updatedAnswer,
+          resultReka: answer.resultReka,
+          resultDomi: answer.resultDomi,
+          resultKata: answer.resultKata,
+          nextQuestNr: answer.nextQuestNr,
+          relQuestionNr: question.number, // Kapcsolódó kérdés száma
+          uploaderId: "currentUserId", // A bejelentkezett felhasználó id-ja
+        };
+
+        // Ha válasznak van id-ja, frissítjük, ha nincs, akkor új választ adunk hozzá
+        if (answer.id && answer.id.length > 6) {
+          // Ellenőrizni, hogy nem egy ideiglenes id-t kaptunk
+          return answerService.updateAnswer(answer.id, answerData);
+        } else {
+          // Ha ideiglenes id-t kapott, akkor nem küldjük el
+          return answerService.addAnswer(answerData); // Új válasz létrehozása
+        }
+      });
+
+      // Válaszok mentése (create vagy update)
+      await Promise.all(answerRequests);
+
+      // Kérdések frissítése
+      onSave(); // A prop-on keresztül meghívjuk a frissítést
+
+      onClose(); // Modal bezárása
+    } catch (error) {
+      console.error("Failed to save data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -99,7 +142,7 @@ const Modal = ({ question, onClose }) => {
                         type="button"
                         onClick={() =>
                           arrayHelpers.push({
-                            id: Math.random().toString(36).substring(7),
+                            id: Math.random().toString(36).substring(7), // Id generálása új válaszhoz
                             relQuestionNr: question.number,
                             updatedAnswer: "",
                             resultReka: 0,
@@ -119,9 +162,10 @@ const Modal = ({ question, onClose }) => {
               />
               <button
                 type="submit"
+                disabled={loading}
                 className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
               >
-                Save
+                {loading ? "Saving..." : "Save"}
               </button>
               <button
                 type="button"

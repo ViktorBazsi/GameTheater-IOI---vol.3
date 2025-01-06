@@ -1,4 +1,3 @@
-// QuestionUploadPage.jsx
 import { useState, useEffect } from "react";
 import QuestionForm from "../components/QuestionForm";
 import QuestionsGrid from "../components/QuestionsGrid"; // Importáljuk a new komponens
@@ -24,9 +23,9 @@ export default function QuestionUploadPage() {
   return (
     <div className="min-h-screen bg-logo-pattern bg-cover bg-center bg-fixed flex flex-col items-center">
       <QuestionForm setQuestion={setQuestions} />
-
       {/* Kérdések kártyák megjelenítése a kiszervezett komponens segítségével */}
-      <QuestionsGrid questions={questions} />
+      <QuestionsGrid questions={questions} setQuestions={setQuestions} />{" "}
+      {/* Add át a setQuestions függvényt */}
     </div>
   );
 }
