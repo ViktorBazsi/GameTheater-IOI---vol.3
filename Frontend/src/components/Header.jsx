@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
@@ -54,13 +55,7 @@ export default function Header() {
                   to="/question" //ezeket még mind meg kell majd csinálni!
                   className="rounded-md px-3 py-2 hover:border-2 hover:border-yellow-500 hover:text-yellow-500 hover:drop-shadow-[0_0_10px_rgba(255,223,0,0.8)] transform transition duration-300 hover:scale-110"
                 >
-                  Kérdések
-                </Link>
-                <Link
-                  to="/answer" //ezeket még mind meg kell majd csinálni!
-                  className="rounded-md px-3 py-2 hover:border-2 hover:border-yellow-500 hover:text-yellow-500 hover:drop-shadow-[0_0_10px_rgba(255,223,0,0.8)] transform transition duration-300 hover:scale-110"
-                >
-                  Válaszok
+                  Kérdések & Válaszok
                 </Link>
                 <Link
                   to="/newGame" //ezeket még mind meg kell majd csinálni!
