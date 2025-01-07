@@ -82,7 +82,7 @@ const Modal = ({ question, onClose, onSave }) => {
       );
 
       // Kérdés eltávolítása a kérdések listájából (onSave hívása)
-      onSave(); // A kérdések frissítése a szülő komponensben
+      await onSave(); // A kérdések frissítése a szülő komponensben
       onClose(); // Modal bezárása
     } catch (error) {
       console.error("Failed to delete question and answers:", error);
@@ -93,8 +93,8 @@ const Modal = ({ question, onClose, onSave }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20">
-      <div className="bg-white p-6 rounded-lg w-96">
-        <h2 className="text-2xl font-semibold mb-4">Edit Question</h2>
+      <div className="bg-white p-6 rounded-lg w-96 max-h-[80vh] overflow-y-auto">
+        <h2 className="text-2xl font-semibold mb-4">Kérdés szerkesztése</h2>
         <Formik
           initialValues={{
             updatedQuestion: question.question,
@@ -132,7 +132,7 @@ const Modal = ({ question, onClose, onSave }) => {
                         />
                         <div className="flex justify-between">
                           <div className="w-1/3">
-                            <label>Reka</label>
+                            <label>Réka</label>
                             <Field
                               name={`updatedAnswers[${index}].resultReka`}
                               type="number"
@@ -170,7 +170,7 @@ const Modal = ({ question, onClose, onSave }) => {
                           onClick={() => handleDeleteAnswer(answer.id)} // Válasz törlés
                           className="bg-red-500 text-white px-4 py-2 rounded"
                         >
-                          Delete Answer
+                          Kérdés törlése
                         </button>
                       </div>
                     ))}
@@ -191,7 +191,7 @@ const Modal = ({ question, onClose, onSave }) => {
                         }
                         className="bg-green-500 text-white px-4 py-2 rounded"
                       >
-                        Add Answer
+                        Válasz hozzáadása
                       </button>
                     </div>
                   </>
@@ -202,21 +202,21 @@ const Modal = ({ question, onClose, onSave }) => {
                 disabled={loading}
                 className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
               >
-                {loading ? "Saving..." : "Save"}
+                {loading ? "Mentek éppen..." : "Mentés"}
               </button>
               <button
                 type="button"
                 onClick={onClose}
                 className="bg-gray-500 text-white px-4 py-2 rounded"
               >
-                Close
+                Bezárás
               </button>
               <button
                 type="button"
                 onClick={handleDeleteQuestion} // Kérdés törlés
-                className="bg-red-500 text-white px-4 py-2 rounded mt-2"
+                className="bg-red-500 text-white px-4 py-2 rounded"
               >
-                Delete Question
+                Kérdés törlése
               </button>
             </Form>
           )}
