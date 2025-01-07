@@ -19,6 +19,7 @@ const QuestionsGrid = ({ questions, setQuestions }) => {
     try {
       const updatedQuestions = await questionService.listQuestions(); // Feltételezve, hogy van egy kérdéseket lekérő metódus
       setQuestions(updatedQuestions); // A kérdések frissítése
+      setSelectedQuestion(null); // Modal állapotának nullázása
     } catch (error) {
       console.error("Failed to refresh questions:", error);
     }

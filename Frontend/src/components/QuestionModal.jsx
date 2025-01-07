@@ -42,7 +42,7 @@ const Modal = ({ question, onClose, onSave }) => {
       await Promise.all(answerRequests);
 
       // Kérdések frissítése
-      onSave(); // A prop-on keresztül meghívjuk a frissítést
+      await onSave(); // A prop-on keresztül meghívjuk a frissítést
 
       onClose(); // Modal bezárása
     } catch (error) {
@@ -81,13 +81,13 @@ const Modal = ({ question, onClose, onSave }) => {
         question.answers.map((answer) => answerService.deleteAnswer(answer.id))
       );
 
-      // Kérdés eltávolítása a kérdések listájából (onSave hívása)
-      await onSave(); // A kérdések frissítése a szülő komponensben
-      onClose(); // Modal bezárása
+      // Kérdés eltávolítása a kérdések listájából
     } catch (error) {
       console.error("Failed to delete question and answers:", error);
     } finally {
       setLoading(false);
+      await onSave(); // A kérdések frissítése a szülő komponensben
+      onClose(); // Modal bezárása
     }
   };
 
