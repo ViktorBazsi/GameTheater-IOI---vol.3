@@ -38,10 +38,18 @@ LOGIC:
             NEXT STEP: ezt berakni a gamePath-be, ott kiszámolni melyik válaszból jött több userAnswerId alapján,
               majd ezt betenni a gamePath resultjaiba, amit automatikusan bedobunk a userPath-ba, hogy a többség által választott game-en menjenek tovább
 
-  NEXT STEP:
+  DONE:
     READY to start building up the FRONT END for this backend! :D ---- STARTED
       QUESTION NUMBER FOR LISTED QUESTIONS
       SZŰRÉSEK - szám, szöveg szerint
       TÖRLÉS ÉS MÓDOSÍTÁS
     Válaszok
       TÖRLÉS ÉS MÓDOSÍTÁS
+        MINOR GLITCH: Ha új kérdést töltök fel és utána megnyitom a modalját, kifagy az oldal és frissíteni kell. Ezt még korrigánli kéne.
+
+
+  NEXT STEP:
+    NEW GAME - creation - admin only
+    USERPATH - frontend - KEZDÉS gomb
+      FIRST TESTING - kérdések válaszok, gamepath frissítése - ADMIN SIDE & USER SIDE
+    ACTORS SCREEN - Showing the results in a 3rd window.

@@ -98,10 +98,12 @@ const Modal = ({ question, onClose, onSave }) => {
         <Formik
           initialValues={{
             updatedQuestion: question.question,
-            updatedAnswers: question.answers.map((answer) => ({
-              ...answer,
-              updatedAnswer: answer.answer,
-            })),
+            updatedAnswers: Array.isArray(question.answers)
+              ? question.answers.map((answer) => ({
+                  ...answer,
+                  updatedAnswer: answer.answer,
+                }))
+              : [], // Ha nincs válasz, akkor üres tömb
           }}
           onSubmit={handleSave}
         >
