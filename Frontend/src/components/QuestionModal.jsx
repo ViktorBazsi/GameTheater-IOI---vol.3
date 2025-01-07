@@ -1,4 +1,3 @@
-
 /* eslint-disable react/prop-types */
 import { Formik, Field, Form, FieldArray } from "formik";
 import { useState } from "react";
@@ -6,7 +5,6 @@ import questionService from "../services/question.service"; // Az új kérdéshe
 import answerService from "../services/answer.service"; // Az új válaszokhoz kapcsolódó service
 
 const Modal = ({ question, onClose, onSave }) => {
-  // onSave prop átadása
   const [loading, setLoading] = useState(false);
 
   const handleSave = async (values) => {
@@ -49,6 +47,45 @@ const Modal = ({ question, onClose, onSave }) => {
       onClose(); // Modal bezárása
     } catch (error) {
       console.error("Failed to save data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteAnswer = async (id) => {
+    try {
+      setLoading(true);
+
+      // Válasz törlése
+      await answerService.deleteAnswer(id);
+
+      // Válasz eltávolítása a válaszok listájából (onSave hívása)
+      onSave(); // A kérdések frissítése a szülő komponensben
+      onClose(); // Modal bezárása
+    } catch (error) {
+      console.error("Failed to delete answer:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteQuestion = async () => {
+    try {
+      setLoading(true);
+
+      // Kérdés törlése
+      await questionService.deleteQuestion(question.id);
+
+      // Minden kapcsolódó válasz törlése
+      await Promise.all(
+        question.answers.map((answer) => answerService.deleteAnswer(answer.id))
+      );
+
+      // Kérdés eltávolítása a kérdések listájából (onSave hívása)
+      onSave(); // A kérdések frissítése a szülő komponensben
+      onClose(); // Modal bezárása
+    } catch (error) {
+      console.error("Failed to delete question and answers:", error);
     } finally {
       setLoading(false);
     }
@@ -130,7 +167,7 @@ const Modal = ({ question, onClose, onSave }) => {
                         />
                         <button
                           type="button"
-                          onClick={() => arrayHelpers.remove(index)}
+                          onClick={() => handleDeleteAnswer(answer.id)} // Válasz törlés
                           className="bg-red-500 text-white px-4 py-2 rounded"
                         >
                           Delete Answer
@@ -173,6 +210,13 @@ const Modal = ({ question, onClose, onSave }) => {
                 className="bg-gray-500 text-white px-4 py-2 rounded"
               >
                 Close
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteQuestion} // Kérdés törlés
+                className="bg-red-500 text-white px-4 py-2 rounded mt-2"
+              >
+                Delete Question
               </button>
             </Form>
           )}
