@@ -52,6 +52,7 @@ export const isValidGamePathName = async (name) => {
     where: { name },
   });
   if (validGamePathName) throw new HttpError("gamePath name már létezik", 404);
+  return validGamePathName;
 };
 
 // QUESTION
