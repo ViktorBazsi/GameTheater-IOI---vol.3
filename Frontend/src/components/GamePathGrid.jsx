@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import Modal from "../components/QuestionModal"; // ENNEK MAJD EGY MÁSIK OLDALRA KÉNE VEZETNIE, AMI MAJD AZ ADMIN PAGE LESZ!
+import Modal from "../components/GamePathModal"; // ENNEK MAJD EGY MÁSIK OLDALRA KÉNE VEZETNIE, AMI MAJD AZ ADMIN PAGE LESZ!
 import gamePathService from "../services/gamePath.service"; // A kérdéseket kezelő service
 
 const GamePathsGrid = ({ gamePaths, setGamePaths }) => {
@@ -36,7 +36,7 @@ const GamePathsGrid = ({ gamePaths, setGamePaths }) => {
               onClick={() => handleCardClick(gamePath)} // Kártya kattintás esemény
             >
               <h3 className="text-lg font-semibold text-yellow-500 mb-4 text-end">
-                {`Játék neve: ${gamePath.name}`}
+                {`Név: ${gamePath.name}`}
               </h3>
               <h3 className="text-lg font-semibold text-yellow-500 mb-4 text-end">
                 {`Jelenlegi kérdés: ${gamePath.questionNr}`}
@@ -76,7 +76,7 @@ const GamePathsGrid = ({ gamePaths, setGamePaths }) => {
 
       {selectedGamePath && (
         <Modal
-          question={selectedGamePath}
+          gamePath={selectedGamePath}
           onClose={handleCloseModal}
           onSave={refreshGamePaths} // Átadjuk a frissítő függvényt a Modalnak
         />
