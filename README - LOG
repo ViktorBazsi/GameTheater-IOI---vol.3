@@ -44,11 +44,24 @@ LOGIC:
       SZŰRÉSEK - szám, szöveg szerint
       TÖRLÉS ÉS MÓDOSÍTÁS
       MINOR GLITCH: Ha új kérdést töltök fel és utána megnyitom a modalját, kifagy az oldal és frissíteni kell. Ezt még korrigánli kéne.
+      NEW GAME - creation - admin only
+      USERPATH - frontend - KEZDÉS gomb
 
 
 
   NEXT STEP:
-    NEW GAME - creation - admin only
-    USERPATH - frontend - KEZDÉS gomb
+    AdminCurrentGamePage - fő kezelő oldal:
+      Itt kell megjeleníteni az éppen aktuális gamePath kérdést, ami arra fog következni (itt lehet majd kiválasztani, hogy melyik válasz menjen ki és melyik ne.)
+        NEXT QUESTION - A megfelelő kérdés-válasz kombó kiküldése (userPath-ok frissítése)
+    
+      UserPah - Válasz adás lehetősége:
+        Add Answer from backend
+          Ezek mind bekerülnek a gamePath-ba, userPathonként
+          Automatikusan meg kéne hívni rá a select majoryity-találkozást
+          A legtöbbet kapott válasz bekerül a gamePath-ba (ez megy a színészekhez és ez frissül majd vissza mindenki userPath-jába)
+            FRISSÍTENI a SZÍNÉSZEK TÁBLÁJÁT
+          Automatikusan visza kéne állni a 0. kérdésre. De az adminnál már a következő kérdés látszódjon.
+            ÉS INNEN INDUL ÚJRA A LOOP
+
       FIRST TESTING - kérdések válaszok, gamepath frissítése - ADMIN SIDE & USER SIDE
     ACTORS SCREEN - Showing the results in a 3rd window.
