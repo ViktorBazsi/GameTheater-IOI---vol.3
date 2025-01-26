@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import gamePathService from "../services/gamePath.service";
+import userPathService from "../services/userPath.service";
 
 const AdminGamePageController = () => {
   const { id } = useParams(); // Az URL-ből lekérjük az ID-t
   const navigate = useNavigate(); // Navigáció használata
   const [gamePath, setGamePath] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [actionMessage, setActionMessage] = useState(""); // Akció visszajelzésekhez
 
   useEffect(() => {
     const fetchGamePath = async () => {
@@ -23,6 +25,28 @@ const AdminGamePageController = () => {
 
     fetchGamePath();
   }, [id]);
+
+  const handleSendNextQuestion = async () => {
+    try {
+      const response = await userPathService.nextQuestion();
+      setActionMessage("A következő kérdés sikeresen elküldve!");
+      console.log("Next question response:", response);
+    } catch (error) {
+      console.error("Failed to send the next question:", error);
+      setActionMessage("Hiba történt a következő kérdés küldésekor.");
+    }
+  };
+
+  const handleUpdateByMajority = async () => {
+    try {
+      const response = await gamePathService.updateGamePathByMajority(id);
+      setActionMessage("A játék sikeresen frissítve többségi döntés alapján!");
+      console.log("Update by majority response:", response);
+    } catch (error) {
+      console.error("Failed to update the game path by majority:", error);
+      setActionMessage("Hiba történt a játék frissítésekor.");
+    }
+  };
 
   if (loading) {
     return (
@@ -75,6 +99,25 @@ const AdminGamePageController = () => {
         <p className="text-lg text-yellow-500">
           <strong>Következő kérdés:</strong> {gamePath.nextQuestion}
         </p>
+
+        {/* Gombok hozzáadása */}
+        <div className="flex space-x-4 mt-4">
+          <button
+            onClick={handleSendNextQuestion}
+            className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition"
+          >
+            Következő kérdés küldése
+          </button>
+          <button
+            onClick={handleUpdateByMajority}
+            className="bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600 transition"
+          >
+            Játék frissítése többségi döntés alapján
+          </button>
+        </div>
+        {actionMessage && (
+          <p className="text-lg text-yellow-500 mt-4">{actionMessage}</p>
+        )}
       </div>
 
       <div className="bg-white bg-opacity-30 rounded-lg shadow-lg p-6 space-y-4 mt-6">
