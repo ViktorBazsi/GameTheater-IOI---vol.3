@@ -34,8 +34,11 @@ const nextQuestion = async () => {
   return response.data;
 };
 
-const addAnswer = async () => {
-  const response = await axiosInstance.put("/api/userPath/question/addAnswer");
+const addAnswer = async (data) => {
+  const response = await axiosInstance.put(
+    "/api/userPath/question/addAnswer",
+    data
+  );
   return response.data;
 };
 

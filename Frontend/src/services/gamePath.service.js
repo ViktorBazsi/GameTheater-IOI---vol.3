@@ -27,7 +27,7 @@ const deleteGamePath = async (id) => {
 
 // EXTRA
 const updateGamePathByMajority = async (id) => {
-  const response = await axiosInstance.update(`api/gamePath/extra(${id})`);
+  const response = await axiosInstance.put(`api/gamePath/extra/${id}`);
   return response.data;
 };
 
