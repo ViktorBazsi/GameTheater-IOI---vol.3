@@ -6,7 +6,7 @@ const listGamePaths = async () => {
 };
 
 const getGamePathById = async (id) => {
-  const response = await axiosInstance.get(`/api/gamaPath/${id}`);
+  const response = await axiosInstance.get(`/api/gamePath/${id}`);
   return response.data;
 };
 

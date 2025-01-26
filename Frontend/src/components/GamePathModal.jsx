@@ -2,13 +2,12 @@
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // React Router navigáció
 import gamePathService from "../services/gamePath.service"; // Az új kérdéshez kapcsolódó service
 
 const Modal = ({ gamePath, onClose, onSave }) => {
   const [loading, setLoading] = useState(false);
-
-  console.log("gamePath:", gamePath); // Debugginghez
-  console.log("gamePath.name:", gamePath?.name);
+  const navigate = useNavigate(); // Navigáció használata
 
   const handleSave = async (values) => {
     try {
@@ -36,20 +35,17 @@ const Modal = ({ gamePath, onClose, onSave }) => {
 
       // Kérdés törlése
       await gamePathService.deleteGamePath(gamePath.id);
-
-      // Minden kapcsolódó válasz törlése
-      //   await Promise.all(
-      //    gamePath.userPaths.map((answer) => userPathService.deleteUserPath(userPath.id))
-      //   ); ----- EHHEZ MÉG MEG KELL CSINÁLNI A USERPATH-okat
-
-      // Kérdés eltávolítása a kérdések listájából
     } catch (error) {
-      console.error("Failed to delete gamPath:", error);
+      console.error("Failed to delete gamePath:", error);
     } finally {
       setLoading(false);
       await onSave(); // A kérdések frissítése a szülő komponensben
       onClose(); // Modal bezárása
     }
+  };
+
+  const handleNavigateToAdminPage = () => {
+    navigate(`/api/gamePath/${gamePath.id}`); // Dinamikus navigáció az adott gamePath.id-re
   };
 
   return (
@@ -110,9 +106,16 @@ const Modal = ({ gamePath, onClose, onSave }) => {
                 <button
                   type="button"
                   onClick={handleDeleteGamePath}
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  className="bg-red-500 text-white px-4 py-2 rounded mr-2"
                 >
                   Játék törlése
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNavigateToAdminPage} // Navigáció gomb
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                >
+                  Admin oldal
                 </button>
               </div>
             </Form>

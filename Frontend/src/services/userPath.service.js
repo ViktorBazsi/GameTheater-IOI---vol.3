@@ -29,10 +29,29 @@ const deleteUserPath = async (id) => {
 
 // EXTRA
 
+const nextQuestion = async () => {
+  const response = await axiosInstance.get("/api/userPath/question/next");
+  return response.data;
+};
+
+const addAnswer = async () => {
+  const response = await axiosInstance.put("/api/userPath/question/addAnswer");
+  return response.data;
+};
+
+const refreshUserPath = async (id) => {
+  const response = await axiosInstance.put(`/api/userPath/refresh/${id}`);
+  return response.data;
+};
+
 export default {
   listUserPaths,
   getUserPathByUserName,
   createUserPath,
   updateUserPath,
   deleteUserPath,
+  // EXTRA
+  nextQuestion,
+  addAnswer,
+  refreshUserPath,
 };

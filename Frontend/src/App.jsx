@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import AdminQuestionPage from "./pages/AdminQuestionsPage";
 import AdminGamePage from "./pages/AdminGamePage";
 import UserGamePage from "./pages/UserGamePage";
+import AdminGamePageController from "./pages/AdminGamePageController";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
             <Route path="/question" element={<AdminQuestionPage />} />
             <Route path="/newGame" element={<AdminGamePage />} />
             <Route path="/currentGame" element={<UserGamePage />} />
+            <Route
+              path="/api/gamePath/:id"
+              element={<AdminGamePageController />}
+            />
           </Routes>
         </div>
       </AuthProvider>
