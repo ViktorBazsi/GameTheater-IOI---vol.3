@@ -65,3 +65,16 @@ LOGIC:
 
       FIRST TESTING - kérdések válaszok, gamepath frissítése - ADMIN SIDE & USER SIDE
     ACTORS SCREEN - Showing the results in a 3rd window.
+
+
+    LOGIC:
+      1: meghívjuk a next question - test - ez kirendereli a userPath alapján a megfelelő, következő kérdést és a hozzá tartozó válaszokat
+          EZ TART MONDJUK 20 MP-ig
+              Addig a felhasználó válaszol - meghívja az addAnswer - Test - a userPath endpointon.
+                Kvázi válaszol, akkor a válasza alapján frissíti az adott user suerPath-ját. (ezt ugye a gamePath-ban is látjuk userenként.)
+      2: ha bejön az összes válasz, vagy letelik a 20 mp,
+          Meghívja a updateGamePath with majoryity endpointot, ami kiszámolja melyik válasz kapta a legtöbb szavazatot a felhasználóktól és beleírja(update-olja) a gamePath-t.
+            Az eredményt kirendereli a színészeknek, hogy lássák az eredményt
+            És felülírja a userPath-okat is, hogy ugyanazon a gamePath-on játszon minden user. s a következő next question hívásnál, már az új kérdés érkezzen.
+
+      FONTOS  -   Nincs 0. kérdés, alap frontend felület legyen, a várakozása a következő kérdésre felirattal.
