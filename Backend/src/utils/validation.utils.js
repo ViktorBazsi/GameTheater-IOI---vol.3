@@ -60,7 +60,7 @@ export const isValidQuestionId = async (id) => {
   const question = await prisma.question.findUnique({
     where: { id },
   });
-  if (!question) throw new HttpError("answer id nem található!", 404);
+  if (!question) throw new HttpError("question id nem található!", 404);
   return question;
 };
 
